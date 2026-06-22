@@ -18,8 +18,38 @@ public class EjecutarJuegodeRol {
         ArrayList<Personajes> coliseo = new ArrayList<>();
 
         coliseo.add(new Guerrero("Marcus el Protector"));
-        coliseo.add(new Mago("Veigar el Arcano"));
         coliseo.add(new Arquero("Robin de los Bosques"));
+        coliseo.add(new Mago("Veigar el Arcano"));
+        
+        // --- CREACIÓN Y ASIGNACIÓN DE EQUIPAMIENTO ---
+        Arma espadaExcalibur = new Arma("Espada Excalibur", 25);
+        Armadura armaduraPlacas = new Armadura("Armadura de Placas de Titan", 20);
+        
+        Arma arcoFenix = new Arma("Arco de Flechas del Fenix", 30);
+        Armadura armaduraCazador = new Armadura("Armadura de Cazador", 15);
+        
+        Arma bastonCristalino = new Arma("Baston Cristalino", 30);
+        Armadura tunicaSabio = new Armadura("Tunica de Sabio", 10);
+
+        // Le damos equipamiento a Marcus (Guerrero)
+        coliseo.get(0).recogerObjeto(espadaExcalibur);
+        coliseo.get(0).recogerObjeto(armaduraPlacas);
+        coliseo.get(0).equiparObjeto(espadaExcalibur);
+        coliseo.get(0).equiparObjeto(armaduraPlacas);
+
+        // Le damos equipamiento a Robin (Arquero)
+        coliseo.get(1).recogerObjeto(arcoFenix);
+        coliseo.get(1).recogerObjeto(armaduraCazador);
+        coliseo.get(1).equiparObjeto(arcoFenix);
+        coliseo.get(2).equiparObjeto(armaduraCazador);
+        
+        // Le damos equipamiento a Veigar (Arquero)
+        coliseo.get(2).recogerObjeto(bastonCristalino);
+        coliseo.get(2).recogerObjeto(tunicaSabio);
+        coliseo.get(2).equiparObjeto(bastonCristalino);
+        coliseo.get(2).equiparObjeto(tunicaSabio);
+        
+        System.out.println("---------------------------------------------\n");
 
         Personajes jugador1 = null;
         Personajes jugador2 = null;
@@ -82,7 +112,7 @@ public class EjecutarJuegodeRol {
                 System.out.println("\n---------------------------------------------");
                 System.out.println(" TURNO DE: " + jugador2.getNombre() + " (HP: " + jugador2.getHp() + " | " + jugador2.getTipoRecurso() + ": " + jugador2.getRecurso() + ")");
                 jugador2.mostrarMenuHabilidades();
-                System.out.print("Selecciona tu acción (1-3): ");
+                System.out.print("Selecciona tu accinn (1-3): ");
                 int opcion2 = scanner.nextInt();
                 jugador2.usarHabilidad(jugador1, opcion2);
             }
