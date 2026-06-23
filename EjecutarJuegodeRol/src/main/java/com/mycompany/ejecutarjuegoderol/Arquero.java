@@ -15,10 +15,10 @@ public class Arquero extends Personajes {
 
     @Override
     public void mostrarMenuHabilidades() {
-        System.out.println("\n--- Habilidades de " + nombre + " (Energía: " + recurso + ") ---");
-        System.out.println("1. Disparo Rápido [Daño: 65 | Costo: 15 Energía]");
-        System.out.println("2. Flecha Perforante [Daño: 110 | Costo: 45 Energía]");
-        System.out.println("3. Lluvia de Flechas [Daño: 160 | Costo: 75 Energía]");
+        System.out.println("\n--- Habilidades de " + nombre + " (Energia: " + recurso + ") ---");
+        System.out.println("1. Disparo Rapido [Danno: 65 | Costo: 15 Energia]");
+        System.out.println("2. Flecha Perforante [Danno: 110 | Costo: 45 Energia]");
+        System.out.println("3. Lluvia de Flechas [Danno: 160 | Costo: 75 Energia]");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Arquero extends Personajes {
         // Definimos las habilidades del arquero directamente en el switch
         switch (opcion) {
             case 1:
-                nombreHabilidad = "Disparo Rápido";
+                nombreHabilidad = "Disparo Rapido";
                 dañoBase = 65;
                 costo = 15;
                 break;
@@ -45,7 +45,7 @@ public class Arquero extends Personajes {
                 costo = 75;
                 break;
             default:
-                System.out.println("❌ Opción inválida. ¡Fallas el turno por indeciso!");
+                System.out.println("❌ Opcion inválida. ¡Fallas el turno por indeciso!");
                 return;
         }
 
@@ -53,7 +53,7 @@ public class Arquero extends Personajes {
         if (this.recurso >= costo) {
             this.recurso -= costo; // Consume la energía
             System.out.println("\n🏹 " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
         } else {
             System.out.println("❌ ¡No tienes suficiente Energía para usar " + nombreHabilidad + "!");
         }
