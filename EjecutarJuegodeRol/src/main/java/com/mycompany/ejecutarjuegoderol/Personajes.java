@@ -12,6 +12,8 @@ import java.util.ArrayList;
     protected int maxHp;
     protected int defensa;
     protected int recurso;
+    protected int[] cooldowns = new int[4]; // Ahora tamaño 4 (para incluir la súper habilidad)
+    protected int turnosTranscurridos = 0;
 
     public Personajes(String nombre, int hp, int defensa, int recurso) {
         this.nombre = nombre;
@@ -22,13 +24,21 @@ import java.util.ArrayList;
     }
 
     // 🚀 EL MÉTODO ABSTRACTO: Recibe al rival y el número de opción del menú
-    public abstract void usarHabilidad(Personajes enemigo, int opcion);
+    public abstract void usarHabilidad(Personajes enemigo, int opcion) throws RequisitosInsuficientesException;
     
     // Método abstracto para mostrar el menú personalizado de cada uno
     public abstract void mostrarMenuHabilidades();
     public abstract String getTipoRecurso();
 
     // Método común para procesar el daño (Ataque - Defensa)
+    public void actualizarTurnoYCooldowns() {
+        this.turnosTranscurridos++; // Incrementa los turnos del personaje
+        for (int i = 0; i < cooldowns.length; i++) {
+            if (cooldowns[i] > 0) {
+                cooldowns[i]--;
+            }
+        }
+    }
     public void recibirDaño(int dañoAtaque) {
         if (dañoAtaque <= 0) return;
 

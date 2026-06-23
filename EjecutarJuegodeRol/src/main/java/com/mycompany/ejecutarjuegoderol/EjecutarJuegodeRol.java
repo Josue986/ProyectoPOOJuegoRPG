@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class EjecutarJuegodeRol {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+       Scanner scanner = new Scanner(System.in);
         ArrayList<Personajes> coliseo = new ArrayList<>();
 
         coliseo.add(new Guerrero("Marcus el Protector"));
@@ -28,7 +28,7 @@ public class EjecutarJuegodeRol {
         // 🔄 BUCLE DE SELECCIÓN: No saldrá de aquí hasta que elijas personajes válidos
         while (!seleccionValida) {
             System.out.println("=============================================");
-            System.out.println("   ️ BIENVENIDO AL COLISEO DE COMBATE POO ️");
+            System.out.println("     ⚔️ BIENVENIDO AL COLISEO DE COMBATE POO ⚔️");
             System.out.println("=============================================");
             
             System.out.println("Personajes disponibles para luchar:");
@@ -44,13 +44,13 @@ public class EjecutarJuegodeRol {
 
             // Validación 1: ¿Los números están dentro del rango de la lista?
             if (p1Index < 0 || p1Index >= coliseo.size() || p2Index < 0 || p2Index >= coliseo.size()) {
-                System.out.println("\n Error: Seleccion fuera de rango. ¡Intentalo de nuevo!\n");
+                System.out.println("\n  Error: Seleccion fuera de rango. ¡Intentalo de nuevo!\n");
                 continue; // Regresa al inicio del while
             }
 
             // Validación 2: ¿Eligió el mismo?
             if (p1Index == p2Index) {
-                System.out.println("\n Error: Un personaje no puede pelear contra si mismo. Elige dos distintos.\n");
+                System.out.println("\n  Error: Un personaje no puede pelear contra si mismo. Elige dos distintos.\n");
                 continue; // Regresa al inicio del while
             }
 
@@ -61,44 +61,61 @@ public class EjecutarJuegodeRol {
         }
 
         // --- EL COMBATE EMPIEZA AQUÍ (Solo si la selección fue exitosa) ---
-        System.out.println("\n ¡EL DUELO HA SIDO PACTADO! ");
-        System.out.println( jugador1.getNombre() + " VS " + jugador2.getNombre());
+        System.out.println("\n ⚔️ ¡EL DUELO HA SIDO PACTADO! ⚔️");
+        System.out.println(jugador1.getNombre() + " VS " + jugador2.getNombre());
         System.out.println("---------------------------------------------");
 
         int turno = 1;
 
         while (jugador1.estaVivo() && jugador2.estaVivo()) {
-            System.out.println("\n=================== TURNO " + turno + " ===================");
+            System.out.println("\n=================== RONDA " + turno + " ===================");
 
             // --- FASE DEL JUGADOR 1 ---
-            System.out.println(" TURNO DE: " + jugador1.getNombre() + " (HP: " + jugador1.getHp() + " | " + jugador1.getTipoRecurso() + ": " + jugador1.getRecurso() + ")");
-            jugador1.mostrarMenuHabilidades();
-            System.out.print("Selecciona tu accion (1-3): ");
-            int opcion1 = scanner.nextInt();
-            jugador1.usarHabilidad(jugador2, opcion1);
+            if (jugador1.estaVivo()) {
+                System.out.println(" 🫵 TURNO DE: " + jugador1.getNombre() + " (HP: " + jugador1.getHp() + " | " + jugador1.getTipoRecurso() + ": " + jugador1.getRecurso() + ")");
+                jugador1.mostrarMenuHabilidades(); // Aquí ya imprimirá la opción 4 que modificamos en las clases hijas
+                System.out.print("Selecciona tu accion (1-4): "); // 👈 Habilitado rango hasta 4
+                int opcion1 = scanner.nextInt();
+                
+                try {
+                    // Si elige 4, "usarHabilidad" verificará internamente los 4 turnos y los 100 de maná/furia
+                    jugador1.usarHabilidad(jugador2, opcion1);
+                } catch (RequisitosInsuficientesException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
 
             // --- FASE DEL JUGADOR 2 ---
             if (jugador2.estaVivo()) {
                 System.out.println("\n---------------------------------------------");
-                System.out.println(" TURNO DE: " + jugador2.getNombre() + " (HP: " + jugador2.getHp() + " | " + jugador2.getTipoRecurso() + ": " + jugador2.getRecurso() + ")");
-                jugador2.mostrarMenuHabilidades();
-                System.out.print("Selecciona tu acción (1-3): ");
+                System.out.println(" 🫵 TURNO DE: " + jugador2.getNombre() + " (HP: " + jugador2.getHp() + " | " + jugador2.getTipoRecurso() + ": " + jugador2.getRecurso() + ")");
+                jugador2.mostrarMenuHabilidades(); // Imprime la opción 4
+                System.out.print("Selecciona tu acción (1-4): "); // 👈 Habilitado rango hasta 4
                 int opcion2 = scanner.nextInt();
-                jugador2.usarHabilidad(jugador1, opcion2);
+                
+                try {
+                    jugador2.usarHabilidad(jugador1, opcion2);
+                } catch (RequisitosInsuficientesException e) {
+                    System.out.println(e.getMessage());
+                }
             }
+
+            // 🌟 ACTUALIZACIÓN POST-RONDA: Es vital para que "turnosTranscurridos" sume uno más en cada ronda
+            jugador1.actualizarTurnoYCooldowns();
+            jugador2.actualizarTurnoYCooldowns();
 
             turno++;
             try { Thread.sleep(1000); } catch (InterruptedException e) { }
         }
 
         System.out.println("\n=============================================");
-        System.out.println(" ¡EL COMBATE HA TERMINADO EN EL TURNO " + (turno - 1) + "! ");
+        System.out.println(" 💀 ¡EL COMBATE HA TERMINADO EN EL TURNO " + (turno - 1) + "! 💀");
         System.out.println("=============================================");
         
         if (jugador1.estaVivo()) {
-            System.out.println(" ¡EL GANADOR INDISCUTIBLE ES: " + jugador1.getNombre().toUpperCase() + "! ");
+            System.out.println(" 🏆 ¡EL GANADOR INDISCUTIBLE ES: " + jugador1.getNombre().toUpperCase() + "! 🏆");
         } else {
-            System.out.println(" ¡EL GANADOR INDISCUTIBLE ES: " + jugador2.getNombre().toUpperCase() + "! ");
+            System.out.println(" 🏆 ¡EL GANADOR INDISCUTIBLE ES: " + jugador2.getNombre().toUpperCase() + "! 🏆");
         }
         System.out.println("=============================================");
         
