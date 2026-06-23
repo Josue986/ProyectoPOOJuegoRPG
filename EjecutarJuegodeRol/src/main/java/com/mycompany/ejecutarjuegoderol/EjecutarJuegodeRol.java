@@ -41,7 +41,7 @@ public class EjecutarJuegodeRol {
         coliseo.get(1).recogerObjeto(arcoFenix);
         coliseo.get(1).recogerObjeto(armaduraCazador);
         coliseo.get(1).equiparObjeto(arcoFenix);
-        coliseo.get(2).equiparObjeto(armaduraCazador);
+        coliseo.get(1).equiparObjeto(armaduraCazador);
         
         // Le damos equipamiento a Veigar (Arquero)
         coliseo.get(2).recogerObjeto(bastonCristalino);
