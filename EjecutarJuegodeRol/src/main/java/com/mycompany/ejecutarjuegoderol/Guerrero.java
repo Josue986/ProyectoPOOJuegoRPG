@@ -17,9 +17,9 @@ public class Guerrero extends Personajes{
     @Override
     public void mostrarMenuHabilidades() {
         System.out.println("\n--- Habilidades de " + nombre + " (Furia: " + recurso + ") ---");
-        System.out.println("1. Golpe de Escudo [Danno: 60 | Costo: 10 Furia]");
-        System.out.println("2. Torbellino de Acero [Danno: 95 | Costo: 30 Furia]");
-        System.out.println("3. Ejecución Devastadora [Danno: 150 | Costo: 60 Furia]");
+        System.out.println("1. Golpe de Escudo [Daño: 60 | Costo: 10 Furia]");
+        System.out.println("2. Torbellino de Acero [Daño: 95 | Costo: 30 Furia]");
+        System.out.println("3. Ejecución Devastadora [Daño: 150 | Costo: 60 Furia]");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Guerrero extends Personajes{
                 costo = 60;
                 break;
             default:
-                System.out.println(" Opcion invalida. ¡Fallas el turno por indeciso!");
+                System.out.println(" Opción invalida. ¡Fallas el turno por indeciso!");
                 return;
         }
 
@@ -54,7 +54,7 @@ public class Guerrero extends Personajes{
         if (this.recurso >= costo) {
             this.recurso -= costo;
             System.out.println("\n️ " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
+            enemigo.recibirDaño(dañoBase);
         } else {
             System.out.println(" ¡No tienes suficiente Furia para usar " + nombreHabilidad + "!");
         }

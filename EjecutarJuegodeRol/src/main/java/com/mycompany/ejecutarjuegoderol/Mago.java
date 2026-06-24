@@ -15,10 +15,10 @@ public class Mago extends Personajes {
 
     @Override
     public void mostrarMenuHabilidades() {
-        System.out.println("\n--- Habilidades de " + nombre + " (Mana: " + recurso + ") ---");
-        System.out.println("1. Proyectil Magico [Danno: 50 | Costo: 0 Mana]");
-        System.out.println("2. Rayo de Escarcha [Danno: 100 | Costo: 40 Mana]");
-        System.out.println("3. Explosión Piroclástica [Danno: 180 | Costo: 80 Mana]");
+        System.out.println("\n--- Habilidades de " + nombre + " (Maná: " + recurso + ") ---");
+        System.out.println("1. Proyectil Magico [Daño: 50 | Costo: 0 Mana]");
+        System.out.println("2. Rayo de Escarcha [Daño: 100 | Costo: 40 Mana]");
+        System.out.println("3. Explosión Piroclástica [Daño: 180 | Costo: 80 Mana]");
     }
 
     @Override
@@ -39,19 +39,19 @@ public class Mago extends Personajes {
                 costo = 40;
                 break;
             case 3:
-                nombreHabilidad = "Explosion Piroclastica";
+                nombreHabilidad = "Explosión Piroclastica";
                 dañoBase = 180;
                 costo = 80;
                 break;
             default:
-                System.out.println(" Opcion invalida. ¡Fallas el turno!");
+                System.out.println(" Opción invalida. ¡Fallas el turno!");
                 return;
         }
 
         if (this.recurso >= costo) {
             this.recurso -= costo;
             System.out.println("\n " + nombre + " lanza [" + nombreHabilidad + "] a " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
+            enemigo.recibirDaño(dañoBase);
         } else {
             System.out.println(" ¡No tienes suficiente Mana para " + nombreHabilidad + "!");
         }

@@ -1,8 +1,5 @@
+com\mycompany\ejecutarjuegoderol\Guerrero.class
+com\mycompany\ejecutarjuegoderol\Mago.class
 com\mycompany\ejecutarjuegoderol\Arquero.class
 com\mycompany\ejecutarjuegoderol\EjecutarJuegodeRol.class
-com\mycompany\ejecutarjuegoderol\Arma.class
-com\mycompany\ejecutarjuegoderol\Armadura.class
-com\mycompany\ejecutarjuegoderol\Guerrero.class
-com\mycompany\ejecutarjuegoderol\Objeto.class
-com\mycompany\ejecutarjuegoderol\Mago.class
 com\mycompany\ejecutarjuegoderol\Personajes.class
