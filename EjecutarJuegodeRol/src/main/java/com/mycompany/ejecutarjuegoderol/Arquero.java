@@ -16,25 +16,26 @@ public class Arquero extends Personajes {
 
     @Override
     public void mostrarMenuHabilidades() {
-        System.out.println("\n--- Habilidades de " + nombre + " (Energía: " + recurso + ") ---");
-        System.out.println("1. Disparo Rápido          [Daño: 65  | Costo: 15 Energía]");
-        System.out.println("2. Flecha Perforante       [Daño: 110 | Costo: 45 Energía] -> CD: " + cooldowns[1]);
-        System.out.println("3. Lluvia de Flechas       [Daño: 160 | Costo: 75 Energía] -> CD: " + cooldowns[2]);
-        System.out.println("4. 🌟 ¡TORMENTA DE SINO SUPER! [Daño: 290 | Costo: 100 Energía] -> CD: " + cooldowns[3] + " (Turno 4+)");
-    
-    }
 
+        System.out.println("\n--- Habilidades de " + nombre + " (Energia: " + recurso + ") ---");
+        System.out.println("1. Disparo Rapido          [Danio: 65  | Costo: 15 Energia]");
+        System.out.println("2. Flecha Perforante       [Danio: 110 | Costo: 45 Energia] -> CD: " + cooldowns[1]);
+        System.out.println("3. Lluvia de Flechas       [Danio: 160 | Costo: 75 Energia] -> CD: " + cooldowns[2]);
+        System.out.println("4.  ¡TORMENTA DE SINO SUPER! [Danio: 290 | Costo: 100 Energia] -> CD: " + cooldowns[3] + " (Turno 4+)");
+    
+}
+
+    
     @Override
     public void usarHabilidad(Personajes enemigo, int opcion) throws RequisitosInsuficientesException {
         String nombreHabilidad = "";
         int dañoBase = 0;
         int costo = 0;
-        int tiempoEspera = 0; // Aquí se guardará el cooldown del switch
+        int tiempoEspera = 0; 
 
-        // Definimos las 4 habilidades del arquero directamente en el switch
         switch (opcion) {
             case 1:
-                nombreHabilidad = "Disparo Rápido";
+                nombreHabilidad = "Disparo Rapido";
                 dañoBase = 65;
                 costo = 15;
                 tiempoEspera = 0; 
@@ -58,42 +59,42 @@ public class Arquero extends Personajes {
                 tiempoEspera = 4; 
                 break;
             default:
-                System.out.println("❌ Opción inválida. ¡Fallas el turno por indeciso!");
+                System.out.println(" Opcion invalida. ¡Fallas el turno por indeciso!");
                 return;
         }
 
-        // UN SOLO BLOCKE TRY-CATCH QUE VALIDA Y EJECUTA
         try {
             // 1. Validación de Cooldown
             if (opcion >= 1 && opcion <= 4 && this.cooldowns[opcion - 1] > 0) {
-                throw new RequisitosInsuficientesException("❌ [" + nombreHabilidad + "] está en enfriamiento. Espera " + this.cooldowns[opcion - 1] + " turno(s).");
+                throw new RequisitosInsuficientesException(" [" + nombreHabilidad + "] está en enfriamiento. Espera " + this.cooldowns[opcion - 1] + " turno(s).");
             }
             
             // 2. Validación Especial de Súper Habilidad
             if (opcion == 4 && this.turnosTranscurridos < 4) {
-                throw new RequisitosInsuficientesException("❌ No puedes usar la Súper Habilidad aún. Requiere que pasen 4 turnos en combate (Llevas: " + this.turnosTranscurridos + ").");
+                throw new RequisitosInsuficientesException(" No puedes usar la Super Habilidad aun. Requiere que pasen 4 turnos en combate (Llevas: " + this.turnosTranscurridos + ").");
             }
             
             // 3. Validación de Recursos
             if (this.recurso < costo) {
-                throw new RequisitosInsuficientesException("❌ No tienes suficiente " + getTipoRecurso() + " para " + nombreHabilidad + ". Requiere: " + costo);
+                throw new RequisitosInsuficientesException(" No tienes suficiente " + getTipoRecurso() + " para " + nombreHabilidad + ". Requiere: " + costo);
             }
 
-            // SI PASA TODO, SE EJECUTA UNA SOLA VEZ
+            // Acción exitosa
             this.recurso -= costo;
             this.cooldowns[opcion - 1] = tiempoEspera; 
             
-            System.out.println("\n🏹 " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            System.out.println("\n " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
+      
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
 
         } catch (RequisitosInsuficientesException e) {
             System.out.println(e.getMessage());
-            System.out.println("💡 Intenta usar una habilidad básica (Opción 1) para no perder tu turno.");
+            System.out.println(" Intenta usar una habilidad basica (Opción 1) para no perder tu turno.");
         }
     }
 
     @Override
     public String getTipoRecurso() { 
-        return "Energía"; 
+        return "Energia"; 
     }
 }

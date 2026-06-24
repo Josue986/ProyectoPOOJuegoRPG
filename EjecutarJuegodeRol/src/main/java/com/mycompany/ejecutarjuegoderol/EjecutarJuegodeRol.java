@@ -18,8 +18,38 @@ public class EjecutarJuegodeRol {
         ArrayList<Personajes> coliseo = new ArrayList<>();
 
         coliseo.add(new Guerrero("Marcus el Protector"));
-        coliseo.add(new Mago("Veigar el Arcano"));
         coliseo.add(new Arquero("Robin de los Bosques"));
+        coliseo.add(new Mago("Veigar el Arcano"));
+        
+        // --- CREACIÓN Y ASIGNACIÓN DE EQUIPAMIENTO ---
+        Arma espadaExcalibur = new Arma("Espada Excalibur", 25);
+        Armadura armaduraPlacas = new Armadura("Armadura de Placas de Titan", 20);
+        
+        Arma arcoFenix = new Arma("Arco de Flechas del Fenix", 30);
+        Armadura armaduraCazador = new Armadura("Armadura de Cazador", 15);
+        
+        Arma bastonCristalino = new Arma("Baston Cristalino", 30);
+        Armadura tunicaSabio = new Armadura("Tunica de Sabio", 10);
+
+        // Le damos equipamiento a Marcus (Guerrero)
+        coliseo.get(0).recogerObjeto(espadaExcalibur);
+        coliseo.get(0).recogerObjeto(armaduraPlacas);
+        coliseo.get(0).equiparObjeto(espadaExcalibur);
+        coliseo.get(0).equiparObjeto(armaduraPlacas);
+
+        // Le damos equipamiento a Robin (Arquero)
+        coliseo.get(1).recogerObjeto(arcoFenix);
+        coliseo.get(1).recogerObjeto(armaduraCazador);
+        coliseo.get(1).equiparObjeto(arcoFenix);
+        coliseo.get(1).equiparObjeto(armaduraCazador);
+        
+        // Le damos equipamiento a Veigar (Arquero)
+        coliseo.get(2).recogerObjeto(bastonCristalino);
+        coliseo.get(2).recogerObjeto(tunicaSabio);
+        coliseo.get(2).equiparObjeto(bastonCristalino);
+        coliseo.get(2).equiparObjeto(tunicaSabio);
+        
+        System.out.println("---------------------------------------------\n");
 
         Personajes jugador1 = null;
         Personajes jugador2 = null;
@@ -28,7 +58,7 @@ public class EjecutarJuegodeRol {
         // 🔄 BUCLE DE SELECCIÓN: No saldrá de aquí hasta que elijas personajes válidos
         while (!seleccionValida) {
             System.out.println("=============================================");
-            System.out.println("     ⚔️ BIENVENIDO AL COLISEO DE COMBATE POO ⚔️");
+            System.out.println("     ️ BIENVENIDO AL COLISEO DE COMBATE POO ️");
             System.out.println("=============================================");
             
             System.out.println("Personajes disponibles para luchar:");
@@ -61,7 +91,7 @@ public class EjecutarJuegodeRol {
         }
 
         // --- EL COMBATE EMPIEZA AQUÍ (Solo si la selección fue exitosa) ---
-        System.out.println("\n ⚔️ ¡EL DUELO HA SIDO PACTADO! ⚔️");
+        System.out.println("\n ️ ¡EL DUELO HA SIDO PACTADO! ️");
         System.out.println(jugador1.getNombre() + " VS " + jugador2.getNombre());
         System.out.println("---------------------------------------------");
 
@@ -72,13 +102,13 @@ public class EjecutarJuegodeRol {
 
             // --- FASE DEL JUGADOR 1 ---
             if (jugador1.estaVivo()) {
-                System.out.println(" 🫵 TURNO DE: " + jugador1.getNombre() + " (HP: " + jugador1.getHp() + " | " + jugador1.getTipoRecurso() + ": " + jugador1.getRecurso() + ")");
+                System.out.println("  TURNO DE: " + jugador1.getNombre() + " (HP: " + jugador1.getHp() + " | " + jugador1.getTipoRecurso() + ": " + jugador1.getRecurso() + ")");
                 jugador1.mostrarMenuHabilidades(); // Aquí ya imprimirá la opción 4 que modificamos en las clases hijas
                 System.out.print("Selecciona tu accion (1-4): "); // 👈 Habilitado rango hasta 4
                 int opcion1 = scanner.nextInt();
                 
                 try {
-                    // Si elige 4, "usarHabilidad" verificará internamente los 4 turnos y los 100 de maná/furia
+              
                     jugador1.usarHabilidad(jugador2, opcion1);
                 } catch (RequisitosInsuficientesException e) {
                     System.out.println(e.getMessage());
@@ -88,9 +118,11 @@ public class EjecutarJuegodeRol {
             // --- FASE DEL JUGADOR 2 ---
             if (jugador2.estaVivo()) {
                 System.out.println("\n---------------------------------------------");
-                System.out.println(" 🫵 TURNO DE: " + jugador2.getNombre() + " (HP: " + jugador2.getHp() + " | " + jugador2.getTipoRecurso() + ": " + jugador2.getRecurso() + ")");
-                jugador2.mostrarMenuHabilidades(); // Imprime la opción 4
-                System.out.print("Selecciona tu acción (1-4): "); // 👈 Habilitado rango hasta 4
+
+               System.out.println("  TURNO DE: " + jugador2.getNombre() + " (HP: " + jugador2.getHp() + " | " + jugador2.getTipoRecurso() + ": " + jugador2.getRecurso() + ")");
+                jugador2.mostrarMenuHabilidades(); 
+                System.out.print("Selecciona tu accion (1-4): ");
+
                 int opcion2 = scanner.nextInt();
                 
                 try {
@@ -100,7 +132,7 @@ public class EjecutarJuegodeRol {
                 }
             }
 
-            // 🌟 ACTUALIZACIÓN POST-RONDA: Es vital para que "turnosTranscurridos" sume uno más en cada ronda
+         
             jugador1.actualizarTurnoYCooldowns();
             jugador2.actualizarTurnoYCooldowns();
 

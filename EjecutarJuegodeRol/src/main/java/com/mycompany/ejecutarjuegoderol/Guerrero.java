@@ -17,10 +17,12 @@ private int tiempoEspera = 0;
     @Override
     public void mostrarMenuHabilidades() {
         System.out.println("\n--- Habilidades de " + nombre + " (Furia: " + recurso + ") ---");
-        System.out.println("1. Golpe de Escudo         [Daño: 60  | Costo: 10 Furia]");
-        System.out.println("2. Torbellino de Acero     [Daño: 95  | Costo: 30 Furia]  -> CD: " + cooldowns[1]);
-        System.out.println("3. Ejecución Devastadora   [Daño: 150 | Costo: 60 Furia]  -> CD: " + cooldowns[2]);
-        System.out.println("4. 🌟 ¡IRA DEL TITÁN SUPER!  [Daño: 280 | Costo: 100 Furia] -> CD: " + cooldowns[3] + " (Turno 4+)");
+
+        System.out.println("1. Golpe de Escudo         [Danio: 60  | Costo: 10 Furia]");
+        System.out.println("2. Torbellino de Acero     [Danio: 95  | Costo: 30 Furia]  -> CD: " + cooldowns[1]);
+        System.out.println("3. Ejecucion Devastadora   [Danio: 150 | Costo: 60 Furia]  -> CD: " + cooldowns[2]);
+        System.out.println("4.  ¡IRA DEL TITAN SUPER!  [Danio: 280 | Costo: 100 Furia] -> CD: " + cooldowns[3] + " (Turno 4+)");
+
     }
 
    @Override
@@ -50,46 +52,40 @@ private int tiempoEspera = 0;
                 tiempoEspera = 2; 
                 break;
             case 4:
-                nombreHabilidad = "¡IRA DEL TITÁN SUPER!";
+                nombreHabilidad = "¡IRA DEL TITAN SUPER!";
                 dañoBase = 280;
                 costo = 100;
                 tiempoEspera = 4; 
                 break;
             default:
-                System.out.println("❌ Opción inválida. ¡Fallas el turno!");
+                System.out.println(" Opcion invalida. ¡Fallas el turno!");
                 return;
         }
 
-        // UN SOLO BLOQUE TRY-CATCH QUE CONTROLA TODO
         try {
-            // 1. Validación de Cooldown
             if (opcion >= 1 && opcion <= 4 && this.cooldowns[opcion - 1] > 0) {
-                throw new RequisitosInsuficientesException("❌ [" + nombreHabilidad + "] está en enfriamiento. Espera " + this.cooldowns[opcion - 1] + " turno(s).");
+                throw new RequisitosInsuficientesException(" [" + nombreHabilidad + "] esta en enfriamiento. Espera " + this.cooldowns[opcion - 1] + " turno(s).");
             }
 
-            // 2. Validación Especial de Súper Habilidad
             if (opcion == 4 && this.turnosTranscurridos < 4) {
-                throw new RequisitosInsuficientesException("❌ No puedes usar la Súper Habilidad aún. Requiere que pasen 4 turnos en combate (Llevas: " + this.turnosTranscurridos + ").");
+                throw new RequisitosInsuficientesException(" No puedes usar la Super Habilidad aún. Requiere que pasen 4 turnos en combate (Llevas: " + this.turnosTranscurridos + ").");
             }
 
-            // 3. Validación de Recursos
             if (this.recurso < costo) {
-                throw new RequisitosInsuficientesException("❌ No tienes suficiente " + getTipoRecurso() + " para " + nombreHabilidad + ". Requiere: " + costo);
+                throw new RequisitosInsuficientesException(" No tienes suficiente " + getTipoRecurso() + " para " + nombreHabilidad + ". Requiere: " + costo);
             }
 
-            // EJECUCIÓN ÚNICA DEL ATAQUE
             this.recurso -= costo;
             this.cooldowns[opcion - 1] = tiempoEspera; 
             
             System.out.println("\n⚔️ " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
 
         } catch (RequisitosInsuficientesException e) {
             System.out.println(e.getMessage());
-            System.out.println("💡 Intenta usar una habilidad básica (Opción 1) para no perder tu turno.");
+            System.out.println(" Intenta usar una habilidad basica (Opción 1) para no perder tu turno.");
         }
     }
-    
 
     @Override
     public String getTipoRecurso() { return "Furia"; }
