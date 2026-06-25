@@ -11,6 +11,7 @@ package com.mycompany.ejecutarjuegoderol;
 public class Guerrero extends Personajes{
 
     public Guerrero(String nombre) {
+      public Guerrero(String nombre) {
         super(nombre, 300, 40, 100); 
     }
 
@@ -64,8 +65,9 @@ public class Guerrero extends Personajes{
         try {
             verificarRecurso(costo);
             this.recurso -= costo;
-            System.out.println("\n️ " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            System.out.println("\n " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
+            
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
 
             if (opcion == 2) this.cooldowns[1] = 1;
             if (opcion == 3) this.cooldowns[2] = 2;

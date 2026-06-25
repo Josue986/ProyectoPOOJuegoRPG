@@ -10,7 +10,7 @@ package com.mycompany.ejecutarjuegoderol;
  */
 public class Mago extends Personajes {
    public Mago(String nombre) {
-        super(nombre, 200, 15, 150); // HP, Defensa, Maná
+        super(nombre, 200, 15, 150); 
     }
 
     @Override
@@ -64,7 +64,8 @@ public class Mago extends Personajes {
             verificarRecurso(costo);
             this.recurso -= costo;
             System.out.println("\n " + nombre + " lanza [" + nombreHabilidad + "] a " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
 
             if (opcion == 2) this.cooldowns[1] = 1;
             if (opcion == 3) this.cooldowns[2] = 2;

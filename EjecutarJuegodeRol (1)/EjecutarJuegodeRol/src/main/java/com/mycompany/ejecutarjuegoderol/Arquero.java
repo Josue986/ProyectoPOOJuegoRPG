@@ -9,8 +9,8 @@ package com.mycompany.ejecutarjuegoderol;
  * @author SebastianCodena
  */
 public class Arquero extends Personajes {
-     public Arquero(String nombre) {
-        super(nombre, 240, 25, 120); // HP: 240, Defensa: 25, Energía: 120
+    public Arquero(String nombre) {
+        super(nombre, 240, 25, 120); 
     }
 
     @Override
@@ -22,8 +22,6 @@ public class Arquero extends Personajes {
         System.out.println("4. [ESPECIAL] Flecha del Juicio [Danio: 230 | Costo: 100 Energia] - CD: " + cooldowns[3]);
     }
     
-    
-
     @Override
     public void usarHabilidad(Personajes enemigo, int opcion) {
         String nombreHabilidad = "";
@@ -65,8 +63,9 @@ public class Arquero extends Personajes {
         try {
             verificarRecurso(costo);
             this.recurso -= costo; 
-            System.out.println("\n " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            System.out.println("\n🏹 " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
+            
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
 
             if (opcion == 2) this.cooldowns[1] = 1;
             if (opcion == 3) this.cooldowns[2] = 2;
