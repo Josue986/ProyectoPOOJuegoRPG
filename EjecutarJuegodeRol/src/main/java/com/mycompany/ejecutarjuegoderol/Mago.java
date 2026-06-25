@@ -47,7 +47,7 @@ public class Mago extends Personajes {
                 tiempoEspera = 2; 
                 break;
             case 3:
-                nombreHabilidad = "Explosion Piroclastica";
+                nombreHabilidad = "Explosión Piroclastica";
                 dañoBase = 180;
                 costo = 80;
                 tiempoEspera = 2; 
@@ -59,7 +59,7 @@ public class Mago extends Personajes {
                 tiempoEspera = 4; 
                 break;
             default:
-                System.out.println(" Opcion invalida. ¡Fallas el turno!");
+                System.out.println(" Opción invalida. ¡Fallas el turno!");
                 return;
         }
 

@@ -35,7 +35,7 @@ public class Arquero extends Personajes {
 
         switch (opcion) {
             case 1:
-                nombreHabilidad = "Disparo Rapido";
+                nombreHabilidad = "Disparo Rápido";
                 dañoBase = 65;
                 costo = 15;
                 tiempoEspera = 0; 
