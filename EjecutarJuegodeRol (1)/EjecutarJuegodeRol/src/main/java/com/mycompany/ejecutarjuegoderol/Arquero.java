@@ -53,7 +53,7 @@ public class Arquero extends Personajes {
         if (this.recurso >= costo) {
             this.recurso -= costo; // Consume la energía
             System.out.println("\n🏹 " + nombre + " apunta fijamente y lanza [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
         } else {
             System.out.println("❌ ¡No tienes suficiente Energía para usar " + nombreHabilidad + "!");
         }
