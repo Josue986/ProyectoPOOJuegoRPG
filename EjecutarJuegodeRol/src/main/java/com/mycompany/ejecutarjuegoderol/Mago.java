@@ -51,7 +51,7 @@ public class Mago extends Personajes {
         if (this.recurso >= costo) {
             this.recurso -= costo;
             System.out.println("\n " + nombre + " lanza [" + nombreHabilidad + "] a " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
         } else {
             System.out.println(" ¡No tienes suficiente Mana para " + nombreHabilidad + "!");
         }

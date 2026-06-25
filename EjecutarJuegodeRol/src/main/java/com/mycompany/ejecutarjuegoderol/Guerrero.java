@@ -54,7 +54,7 @@ public class Guerrero extends Personajes{
         if (this.recurso >= costo) {
             this.recurso -= costo;
             System.out.println("\n️ " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
-            enemigo.recibirDaño(dañoBase);
+            enemigo.recibirDaño(this.calcularAtaque(dañoBase));
         } else {
             System.out.println(" ¡No tienes suficiente Furia para usar " + nombreHabilidad + "!");
         }
