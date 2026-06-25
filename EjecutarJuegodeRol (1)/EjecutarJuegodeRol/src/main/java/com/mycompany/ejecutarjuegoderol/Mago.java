@@ -15,10 +15,11 @@ public class Mago extends Personajes {
 
     @Override
     public void mostrarMenuHabilidades() {
-        System.out.println("\n--- Habilidades de " + nombre + " (Maná: " + recurso + ") ---");
-        System.out.println("1. Proyectil Magico [Daño: 50 | Costo: 0 Mana]");
-        System.out.println("2. Rayo de Escarcha [Daño: 100 | Costo: 40 Mana]");
-        System.out.println("3. Explosión Piroclástica [Daño: 180 | Costo: 80 Mana]");
+        System.out.println("\n--- Habilidades de " + nombre + " (Mana: " + recurso + ") ---");
+        System.out.println("1. Proyectil Magico [Danio: 50 | Costo: 0 Mana] - CD: " + cooldowns[0]);
+        System.out.println("2. Rayo de Escarcha [Danio: 100 | Costo: 40 Mana] - CD: " + cooldowns[1]);
+        System.out.println("3. Explosion Piroclástica [Danio: 180 | Costo: 80 Mana] - CD: " + cooldowns[2]);
+        System.out.println("4. [ESPECIAL] Cataclismo Estelar [Danio: 250 | Costo: 120 Mana] - CD: " + cooldowns[3]);
     }
 
     @Override
@@ -26,6 +27,7 @@ public class Mago extends Personajes {
         String nombreHabilidad = "";
         int dañoBase = 0;
         int costo = 0;
+        int indiceCD = opcion - 1;
 
         switch (opcion) {
             case 1:
@@ -39,21 +41,37 @@ public class Mago extends Personajes {
                 costo = 40;
                 break;
             case 3:
-                nombreHabilidad = "Explosión Piroclastica";
+                nombreHabilidad = "Explosion Piroclastica";
                 dañoBase = 180;
                 costo = 80;
                 break;
+            case 4:
+                nombreHabilidad = "Cataclismo Estelar (Especial)";
+                dañoBase = 250;
+                costo = 120;
+                break;
             default:
-                System.out.println(" Opción invalida. ¡Fallas el turno!");
+                System.out.println(" Opcion invalida. ¡Fallas el turno!");
                 return;
         }
 
-        if (this.recurso >= costo) {
+        if (this.cooldowns[indiceCD] > 0) {
+            System.out.println(" ¡" + nombreHabilidad + " esta en Cooldown! Faltan " + this.cooldowns[indiceCD] + " turnos.");
+            return;
+        }
+
+        try {
+            verificarRecurso(costo);
             this.recurso -= costo;
             System.out.println("\n " + nombre + " lanza [" + nombreHabilidad + "] a " + enemigo.getNombre() + "!");
             enemigo.recibirDaño(dañoBase);
-        } else {
-            System.out.println(" ¡No tienes suficiente Mana para " + nombreHabilidad + "!");
+
+            if (opcion == 2) this.cooldowns[1] = 1;
+            if (opcion == 3) this.cooldowns[2] = 2;
+            if (opcion == 4) this.cooldowns[3] = 4;
+
+        } catch (Exception e) {
+            System.out.println(" ERROR DE MANA: " + e.getMessage());
         }
     }
 
