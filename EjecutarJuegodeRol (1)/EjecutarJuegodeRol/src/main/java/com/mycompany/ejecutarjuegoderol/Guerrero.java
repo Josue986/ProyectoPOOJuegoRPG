@@ -1,0 +1,65 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.ejecutarjuegoderol;
+
+/**
+ *
+ * @author SebastianCodena
+ */
+public class Guerrero extends Personajes{
+
+    public Guerrero(String nombre) {
+        super(nombre, 300, 40, 100); 
+    }
+
+    @Override
+    public void mostrarMenuHabilidades() {
+        System.out.println("\n--- Habilidades de " + nombre + " (Furia: " + recurso + ") ---");
+        System.out.println("1. Golpe de Escudo [Daño: 60 | Costo: 10 Furia]");
+        System.out.println("2. Torbellino de Acero [Daño: 95 | Costo: 30 Furia]");
+        System.out.println("3. Ejecución Devastadora [Daño: 150 | Costo: 60 Furia]");
+    }
+
+    @Override
+    public void usarHabilidad(Personajes enemigo, int opcion) {
+        String nombreHabilidad = "";
+        int dañoBase = 0;
+        int costo = 0;
+
+        // Aquí definimos las habilidades directamente
+        switch (opcion) {
+            case 1:
+                nombreHabilidad = "Golpe de Escudo";
+                dañoBase = 60;
+                costo = 10;
+                break;
+            case 2:
+                nombreHabilidad = "Torbellino de Acero";
+                dañoBase = 95;
+                costo = 30;
+                break;
+            case 3:
+                nombreHabilidad = "Ejecucion Devastadora";
+                dañoBase = 150;
+                costo = 60;
+                break;
+            default:
+                System.out.println(" Opción invalida. ¡Fallas el turno por indeciso!");
+                return;
+        }
+
+        // Validar recursos y ejecutar
+        if (this.recurso >= costo) {
+            this.recurso -= costo;
+            System.out.println("\n️ " + nombre + " usa [" + nombreHabilidad + "] contra " + enemigo.getNombre() + "!");
+            enemigo.recibirDaño(dañoBase);
+        } else {
+            System.out.println(" ¡No tienes suficiente Furia para usar " + nombreHabilidad + "!");
+        }
+    }
+
+    @Override
+    public String getTipoRecurso() { return "Furia"; }
+}
