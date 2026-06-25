@@ -12,7 +12,7 @@ import java.util.ArrayList;
     protected int maxHp;
     protected int defensa;
     protected int recurso;
-    
+    protected int[] cooldowns = new int[4]; 
     protected ArrayList<Objeto> inventario;
     protected Arma armaEquipada;
     protected Armadura armaduraEquipada;
@@ -23,13 +23,11 @@ import java.util.ArrayList;
         this.maxHp = hp;
         this.defensa = defensa;
         this.recurso = recurso;
+        this.cooldowns[3] = 4; 
         this.inventario = new ArrayList<>();
     }
 
-    // 🚀 EL MÉTODO ABSTRACTO: Recibe al rival y el número de opción del menú
     public abstract void usarHabilidad(Personajes enemigo, int opcion);
-    
-    // Método abstracto para mostrar el menú personalizado de cada uno
     public abstract void mostrarMenuHabilidades();
     public abstract String getTipoRecurso();
     
@@ -56,19 +54,32 @@ import java.util.ArrayList;
         }
     }
     
-    // Método común para procesar el daño (Ataque - Defensa)
+    public void actualizarTurnosCooldown() {
+        for (int i = 0; i < cooldowns.length; i++) {
+            if (cooldowns[i] > 0) {
+                cooldowns[i]--;
+            }
+        }
+    }
+
+    protected void verificarRecurso(int costo) throws Exception {
+        if (this.recurso < costo) {
+            throw new Exception("¡No tienes suficiente " + getTipoRecurso() + " para usar esta habilidad!");
+        }
+    }
+
     public void recibirDaño(int dañoAtaque) {
         if (dañoAtaque <= 0) return;
 
-        int defensaActual = calcularDefensaTotal(); // Considera la armadura equipada
+        int defensaActual = calcularDefensaTotal(); 
         int dañoReal = dañoAtaque - defensaActual;
         if (dañoReal < 0) {
-            dañoReal = 0; // La defensa absorbió todo
+            dañoReal = 0; 
         }
 
         this.hp = Math.max(0, this.hp - dañoReal);
-        System.out.println( nombre + " (Defensa: " + this.defensa + ") mitiga el golpe.");
-        System.out.println(" Daño real recibido: " + dañoReal + " | HP restante: " + this.hp + "/" + this.maxHp);
+        System.out.println(nombre + " (Defensa: " + this.defensa + ") mitiga el golpe.");
+        System.out.println(" Danio real recibido: " + dañoReal + " | HP restante: " + this.hp + "/" + this.maxHp);
     }
     
     public int calcularAtaque(int dañoHabilidad) {
@@ -91,4 +102,5 @@ import java.util.ArrayList;
     public String getNombre() { return nombre; }
     public int getHp() { return hp; }
     public int getRecurso() { return recurso; }
+    public int getCooldownHabilidad(int indice) { return cooldowns[indice]; }
 }
